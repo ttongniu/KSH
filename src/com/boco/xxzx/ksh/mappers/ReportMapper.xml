@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.xxzx.ksh.dao.ReportDao">
+	
+	<select id="findProvinceProject"  resultType="ProvinceProject" >
+	select * from ksh_provinces_project
+	</select>
+	
+	<select id="findIndustryProject" resultType="IndustryProject" >
+	select * from ksh_industry_project
+	</select>
+	
+	<select id="findBusinessPersonYSSJForYear" resultType="BusinessPersonYSSJ"  parameterType="String">
+	select * from ksh_business_person where year=#{year}
+	</select>
+	
+	<select id="findDepartmentPersonYSSJForYear" resultType="DepartmentPersonYSSJ"  parameterType="String">
+	select * from ksh_department_person where year=#{year}
+	</select>
+	
+	<select id="findBusinessList" resultType="BusinessInfo">
+	select distinct code,name from ksh_business_rl_person order by code
+	</select>
+	
+	<select id="findbusinessPersonTotal" resultType="BusinessPersonTotal">
+	select 'all' as code,'全部' as name,month,sum(total_person) as total_person from ksh_business_rl_person group by month order by month
+	</select>
+	
+	<select id="findbusinessPersonTotalByCode" resultType="BusinessPersonTotal" parameterType="String">
+	select code,name,total_person,month from ksh_business_rl_person where code=#{code} order by month
+	</select>
+	
+	<select id="findBusinessPersonRuZhi" resultType="BusinessPersonRuZhi">
+	select 'all' as code,'全部' as name,month,sum(rz_person) as rz_person from ksh_business_rl_person group by month order by month
+	</select>
+	
+	<select id="findBusinessPersonRuZhiByCode" resultType="BusinessPersonRuZhi" parameterType="String">
+	select code,name,rz_person,month from ksh_business_rl_person where code=#{code} order by month
+	</select>
+	
+	<select id="findBusinessPersonLiZhi" resultType="BusinessPersonLiZhi">
+	select 'all' as code,'全部' as name,month,sum(lz_person) as lz_person from ksh_business_rl_person group by month order by month
+	</select>
+	
+	<select id="findBusinessPersonLiZhiByCode"  resultType="BusinessPersonLiZhi" parameterType="String">
+	select code,name,lz_person,month from ksh_business_rl_person where code=#{code} order by month
+	</select>
+	
+	<select id="findPersonSiLingByYear" resultType="PersonSiLing" parameterType="String">
+	select num as value,siling as name from ksh_siling_person where year=#{year} order by code
+	</select>
+	
+	<select id="findPersonNianLingByYear" resultType="PersonNianLing" parameterType="String">
+	select num as value,nianling as name from ksh_nianling_person where year=#{year} order by code
+	</select>
+	
+	<select id="findPersonXueLiByYear" resultType="PersonXueLi" parameterType="String">
+	select num as value,xueli as name from ksh_xueli_person where year=#{year}
+	</select>
+	
+	<select id="findPersonScoreByYear" resultType="PersonScore" parameterType="String">
+	select num as value,concat(concat(concat(grade, '('),score),')') as name from ksh_score_person where year=#{year} order by code
+	</select>
+	
+	<select id="findBusinessPersonAssets" resultType="BusinessPersonAssets">
+	select name,num,asset from ksh_business_person_assets where year=#{year}
+	</select>
+	
+	<select id="findDepartmentPersonAssets" resultType="DepartmentPersonAssets">
+	select name,num,asset from ksh_department_person_assets where year=#{year}
+	</select>
+	
+</mapper>
